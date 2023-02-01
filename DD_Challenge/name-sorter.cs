@@ -5,15 +5,16 @@ using System.Linq;
 
 namespace DD_Challenge
 {
-    class Program
+    public class NameSortProgram
     {
         static void Main(string[] args)
         {
+            NameSortProgram programInstance = new NameSortProgram();
             // Check that a file has been provided, and that no other errors have occured before attempting
             // to execute the program.
             try
             {
-                string[] txtLines = ReadProvidedTextFile(args);
+                string[] txtLines = programInstance.ReadProvidedTextFile(args);
                 // Check that the provided file has data, otherwise exiting execution with an error message.
                 if (txtLines.Length < 1)
                 {
@@ -21,9 +22,9 @@ namespace DD_Challenge
                 }
                 else 
                 {
-                    List<Names> namesList = ReadTextIntoList(txtLines);
-                    IOrderedEnumerable<Names> sortedNamesList = SortProvidedList(namesList);
-                    WriteListToConsoleAndFile(sortedNamesList);
+                    List<Names> namesList = programInstance.ReadTextIntoList(txtLines);
+                    IOrderedEnumerable<Names> sortedNamesList = programInstance.SortProvidedList(namesList);
+                    programInstance.WriteListToConsoleAndFile(sortedNamesList);
                 }
             }
             catch (FileNotFoundException) 
@@ -42,7 +43,7 @@ namespace DD_Challenge
         /// Checks the length of the names to ensure no null values are printed.
         /// </summary>
         /// <param name="sortedNamesList">The list of names to be iterated upon</param>
-        private static void WriteListToConsoleAndFile(IOrderedEnumerable<Names> sortedNamesList)
+        public void WriteListToConsoleAndFile(IOrderedEnumerable<Names> sortedNamesList)
         {
             // Create a new file to write to, overwriting any previous data.
             using StreamWriter outputFile = new StreamWriter("sorted-names-list.txt");
@@ -74,7 +75,7 @@ namespace DD_Challenge
         /// </summary>
         /// <param name="namesList">List of names to be sorted</param>
         /// <returns>An alphabetically sorted list of names</returns>
-        private static IOrderedEnumerable<Names> SortProvidedList(List<Names> namesList)
+        public IOrderedEnumerable<Names> SortProvidedList(List<Names> namesList)
         {
             // Sort the list of names using LINQ first by last name, then by first name, then by middle names.
             return namesList.OrderBy(x => x.LastName)
@@ -90,7 +91,7 @@ namespace DD_Challenge
         /// </summary>
         /// <param name="txtLines">An array of lines from a text file</param>
         /// <returns>A list of Names</returns>
-        private static List<Names> ReadTextIntoList(string[] txtLines)
+        public List<Names> ReadTextIntoList(string[] txtLines)
         {
             // Create list of Names class to store read names.
             List<Names> namesList = new List<Names>();
@@ -133,7 +134,7 @@ namespace DD_Challenge
         /// </summary>
         /// <param name="args">The text file to be read, provided at runtime</param>
         /// <returns>An array of text lines</returns>
-        private static string[] ReadProvidedTextFile(string[] args)
+        public string[] ReadProvidedTextFile(string[] args)
         {
             // Get the name of the provided text file.
             string textFile = args[0];
