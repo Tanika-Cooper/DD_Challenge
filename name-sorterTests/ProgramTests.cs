@@ -105,5 +105,22 @@ namespace DD_Challenge.Tests
             // Assert
             Assert.IsTrue(File.Exists("sorted-names-list.txt") && (new FileInfo("sorted-names-list.txt").Length > 0));
         }
+
+        [TestMethod()]
+        public void ReadTextIntoList_SplitsNamesCorrectly() 
+        {
+            // Arrange
+            NameSortProgram programInstance = new NameSortProgram();
+            string[] mockInput = {"Samantha Lee Hilary Mckenna"};
+
+            // Act
+            List<Names> namesList = programInstance.ReadTextIntoList(mockInput);
+
+            // Assert
+            Assert.IsTrue(namesList.ElementAt(0).FirstName.Equals("Samantha") &&
+                namesList.ElementAt(0).MiddleFirst.Equals("Lee") &&
+                namesList.ElementAt(0).MiddleSecond.Equals("Hilary") &&
+                namesList.ElementAt(0).LastName.Equals("Mckenna"));
+        }
     }
 }
